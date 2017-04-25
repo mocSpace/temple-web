@@ -4,6 +4,7 @@
 一个简单的基于gulp搭建的自动化框架。
 
 ##使用方法
+
 1、下载安装gulp插件和bower类库；
 ````
 npm install
