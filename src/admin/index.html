@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
+    <title>浙江工业品市场-后台管理系统</title>
+
+    <link rel="canonical" href="">
+    <link rel="shortcut icon" href=""/>
+    <link rel="bookmark" href=""/>
+    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../lib/bootstrap-table/bootstrap-table.css">
+    <link rel="stylesheet" href="../lib/bootstrap-editable/css/bootstrap-editable.css">
+    <!--<link rel="stylesheet" href="../lib/bootstrap-datepicker-1.5.1/css/bootstrap-datepicker.css">-->
+    <!--<link rel="stylesheet" href="../lib/bootstrap-datetimepicker-2.3.8/css/bootstrap-datetimepicker.css">-->
+    <link rel="stylesheet" href="../lib/bootstrap-sweetalert/sweetalert.css">
+    <link rel="stylesheet" href="../lib/font-awesome/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/admin.css">
+
+</head>
+<body ng-app="index" id="ng-app" ng-controller="indexCtrl">
+<!--头部-->
+<header ng-include="'index-header.html'"></header>
+<div class="index-container">
+    <!-- 动态显示当前时间 -->
+    <div class="now-times-div" ng-bind="nowTimes"></div>
+    <div my-menu-list=""></div>
+
+    <!--<div class="index-left-menu">-->
+        <!--<ul id="accordion" class="index-menu-list backgroup-f6 ng-clock">-->
+            <!--<li ng-repeat="m1 in items" class="border-top"  ng-class="{'border-top-nor':$first}">-->
+                <!--<div class="title" ng-class="{'select':m1.select}" ng-click="menuSelect($index)">-->
+                    <!--<i class="fa fa-file-text-o"></i>-->
+                    <!--<label>{{m1.menu}}</label>-->
+                    <!--<i class="fa fa-angle-right" ng-class="{'rotate90':m1.select,'rotate-back':!m1.select}"></i>-->
+                <!--</div>-->
+                <!--<ul class="submenu" ng-show="m1.select">-->
+                    <!--<li ng-repeat="m2 in m1.children" ng-class="{'margt6':$first,'margb6':$last}">-->
+                        <!--<a ui-sref="{{m2.href}}" ng-bind="m2.menu" ng-click="selectSubmenu($parent.$index,$index)" ng-class="{'select-sunmenu':m2.select}"></a>-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--</li>-->
+        <!--</ul>-->
+    <!--</div>-->
+
+    <!-- 右边视图 -->
+    <div style="margin-left: 240px">
+        <div ui-view class="container-fluid" style="padding: 0"></div>
+    </div>
+</div>
+
+
+<script src="../lib/jquery/jquery.min.js" type="text/javascript"></script>
+<script src="../lib/angular/angular.min.js" type="text/javascript"></script>
+<script src="../lib/angular/angular-ui-router.min.js"></script>
+<script src="../lib/angular/angular-sanitize.min.js"></script>
+<script src="../lib/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="../lib/jquery-validation/jquery.validate.min.js" type="text/javascript"></script>
+<script src="../lib/jquery-validation/additional-methods.min.js" type="text/javascript"></script>
+<script src="../lib/jquery-validation/localization/messages_zh.js" type="text/javascript"></script>
+
+<script src="../lib/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="../lib/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+<script src="../lib/bootstrap-table/extensions/angular/bootstrap-table-angular.min.js"></script>
+<script src="../lib/bootstrap-editable/js/bootstrap-editable.min.js"></script>
+<script src="../lib/bootstrap-table/extensions/editable/bootstrap-table-editable.min.js"></script>
+<script src="../lib/bootstrap-table/extensions/export/bootstrap-table-export.min.js"></script>
+<!--<script src="../lib/bootstrap-table/extensions/export/tableExportPlugin.min.js"></script>-->
+<script src="../lib/bootstrap-sweetalert/sweetalert.min.js"></script>
+
+
+<script src="js/common.js"></script>
+<script src="js/constant.js"></script>
+<script src="js/controllers.js"></script>
+<script src="js/admin.js"></script>
+<script src="js/services.js"></script>
+<script src="js/filters.js"></script>
+<script src="js/directives.js"></script>
+<script src="js/validate.js"></script>
+</body>
+</html>

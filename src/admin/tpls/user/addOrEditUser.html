@@ -1,0 +1,152 @@
+<div class="padding15" style="margin: 80px">
+    <form class="form-horizontal adduser-form">
+        <div class="form-group">
+            <label class="col-md-2 col-lg-2 control-label"><span class="p-red vertical-middle margr5">*</span>用户名:</label>
+            <div class=" col-md-2 col-lg-2">
+                <input type="text" class="form-control" ng-model="user.username" name="username">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 col-lg-2 control-label">昵称:</label>
+            <div class=" col-md-2 col-lg-2">
+                <input type="text" class="form-control" ng-model="user.nickname" name="nickname">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 col-lg-2 control-label"><span class="p-red vertical-middle margr5">*</span>手机号:</label>
+            <div class=" col-md-2 col-lg-2">
+                <input type="tel" class="form-control" ng-model="user.phone" name="phone">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 col-lg-2 control-label">邮箱地址:</label>
+            <div class=" col-md-2 col-lg-2">
+                <input type="email" class="form-control" ng-model="user.email">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 col-lg-2 control-label">密码:</label>
+            <div class=" col-md-2 col-lg-2">
+                <input type="password" class="form-control" ng-model="user.password">
+            </div>
+            <div class="col-md-2 col-lg-2 padt6">
+                <span class="p-grey">添加用户时必填</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 col-lg-2 control-label"><span class="p-red vertical-middle margr5">*</span>性别:</label>
+            <div class="col-md-4 col-lg-4">
+                <label class="radio-inline">
+                    <input type="radio" ng-model="user.gender" value="0" name="sex">保密
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" ng-model="user.gender" value="1" name="sex">男
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" ng-model="user.gender" value="2" name="sex">女
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 col-lg-2 control-label"><span class="p-red vertical-middle margr5">*</span>用户类型:</label>
+            <div class="col-md-4 col-lg-4">
+                <label class="radio-inline" style="width: 150px;margin-left: 0" ng-repeat="r in roleAll">
+                    <input type="checkbox" class="ver-texttop margr5" ng-model="r.isCheck">{{r.name}}
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 col-lg-2 control-label">真实姓名:</label>
+            <div class=" col-md-2 col-lg-2">
+                <input type="text" class="form-control" ng-model="user.idName" name="realname">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 col-lg-2 control-label">身份证号码:</label>
+            <div class=" col-md-2 col-lg-2">
+                <input type="text" class="form-control" ng-model="user.idCard" name="idCard">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-md-1 col-lg-1">
+                <button type="submit" class="btn btn-info btn-block">提交</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<script>
+
+    var scope = $(".adduser-form").scope();
+    var formValiadte = new FormValiadte();
+
+    formValiadte.el = $(".adduser-form");
+    formValiadte.rules = {
+        username: {
+            required: true
+        },
+        password: {
+            required: true
+        },
+        phone: {
+            rangelength: [11, 11],
+            number: true,
+            required: true
+        },
+        relName: {
+            required: true
+        },
+        sex: {
+            required: true
+        },
+        email:{
+            email:true
+        }
+    };
+    formValiadte.messages = {
+        username: {
+            required: "用户名不能为空"
+        },
+        password: {
+            required: "密码不能为空"
+        },
+        phone: {
+            rangelength: "请输入正确的手机号",
+            number: "请输入正确的手机号",
+            required: "手机号不能为空"
+        },
+        relName: {
+            required: "请输入真实姓名"
+        },
+        sex: {
+            required: "请选择性别"
+        },
+        email:{
+            email: "邮件格式不正确"
+        }
+    };
+
+    formValiadte.submitHandler = function () {
+        scope.submit();
+    };
+    initValiadte(formValiadte);
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,145 @@
+<div class="padding15" style="margin-top: 80px">
+    <div class="clearfix" id="toolbar">
+        <div class="pull-left">
+            <button type="button" id="removeRows" class="btn btn-danger">删除</button>
+        </div>
+        <div class="pull-left margl40 margt3">
+            <form class="form-inline">
+                <i class="fa fa-search vertical-sub icon"></i>
+                <div class="form-group userList_group_label">
+                    <label class="toolbar_group_label">
+                        <select class="form-control" ng-model="search.field" ng-options="s.field as s.title for s in selectColumns">
+                            <option value="">--请选择--</option>
+                        </select>
+                    </label>
+                    <input type="text" class="form-control" style="min-width: 210px" ng-model="search.newValue">
+                </div>
+                <button type="submit" class="userList_btn btn btn-default" id="search">搜索</button>
+            </form>
+        </div>
+    </div>
+
+    <table class="table table_com" id="tb_userList"></table>
+</div>
+
+<script>
+    var scope = $("#tb_userList").scope();
+    var commonBst = new CommonBst();
+    commonBst.el = $("#tb_userList");
+    commonBst.toolbar = $("#toolbar");
+    commonBst.url = PATH.getBSTUsers;
+    commonBst.uniqueId = "id";
+    commonBst.ajaxDelUrl = PATH.delectUser;
+    commonBst.ajaxEditUrl = PATH.editUserAjax;
+    //    commonBst.queryParams = queryParams;
+
+    window.operateEvents = {
+        'click .edit': function (e, value, row, index) {
+            scope.edit(row);
+        },
+        'click .remove': function (e, value, row, index) {
+            commonBst.eventsDel(e, value, row, index);
+        }
+    };
+    var columns = [
+        {
+            checkbox: true
+        }, {
+            field: "id",
+            title: '用户id',
+            align: 'center',
+            visible: false
+        }, {
+            field: 'usernameAll',
+            title: '用户名',
+            align: 'center',
+            sortable: false,
+            editable: true
+        }, {
+            field: 'phone',
+            title: '手机',
+            align: 'center',
+            sortable: false,
+            editable: true
+        }, {
+            field: 'nickname',
+            title: '昵称',
+            align: 'center',
+            sortable: false,
+            editable: true
+        }, {
+            field: 'gender',
+            title: '性别',
+            align: 'center',
+            sortable: true,
+            editable: {
+                type: "select",
+                source: [{value: 0, text: '保密'}, {value: 1, text: '男'}, {value: 2, text: '女'}]
+            }
+        }, {
+            field: 'userRoleModels',
+            title: '用户角色',
+            align: 'center',
+            sortable: false,
+            editable: false,
+            formatter: roleFormatter
+        }, {
+            field: 'email',
+            title: '邮件地址',
+            align: 'center',
+            sortable: false,
+            //            type: "email",
+            editable: {
+                type: "email"
+            }
+        }, {
+            field: 'idName',
+            title: '真实姓名',
+            align: 'center',
+            sortable: false,
+            editable: true
+        }, {
+            field: 'operate',
+            title: '操作',
+            align: 'center',
+            events: operateEvents,
+            formatter: operateFormatter
+        }
+    ];
+    commonBst.columns = columns;
+    var bst = initBST(commonBst);
+
+    scope.selectColumns = commonBst.selectColumns;
+
+    //    function detailFormatter(index, row) {
+    //        var html = [];
+    //        $.each(row, function (key, value) {
+    //            html.push('<p><b>' + key + ':</b> ' + value + '</p>');
+    //        });
+    //        return html.join('');
+    //    }
+    function operateFormatter(value, row, index) {
+        return [
+            '<a class="edit" style="margin: 0 10px" href="javascript:void(0)" title="编辑"><i class="glyphicon glyphicon-pencil"></i></a>',
+            '<a class="remove" href="javascript:void(0)" title="删除"><i class="glyphicon glyphicon-remove"></i></a>'
+        ].join('');
+    }
+    function roleFormatter(value, row, index) {
+        console.log(value);
+        var arr = [];
+        var str = "暂无角色信息";
+        if (value && value.length > 0) {
+            for (var i = 0; i < value.length; i++) {
+                if(!value[i]){
+                    arr.push(str);
+                    continue;
+                }
+                arr.push(value[i].name);
+            }
+            str = arr.join(',');
+        }
+        return [
+            "<label>" + str + "</label>"
+        ].join('');
+    }
+</script>

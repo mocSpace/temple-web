@@ -1,0 +1,163 @@
+<link rel="stylesheet" href="../lib/font-awesome/css/font-awesome.min.css" type="text/css">
+<style>
+    .w100 {
+        width: 100%;
+    }
+
+    .admin-menu {
+        position: absolute;
+        width: 240px;
+        height: 100%;
+        top: 0;
+        background: #f6f6f6;
+    }
+
+    .border-top {
+        border-top: 1px solid #eee;
+    }
+
+    .border-top-nor {
+        border-top: none;
+    }
+
+    .rotate90 {
+        /* Safari */
+        -webkit-transform: rotate(90deg);
+        /* Firefox */
+        -moz-transform: rotate(90deg);
+        /* Internet Explorer 滤镜写法*/
+        filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+        transition: all 0.4s;
+    }
+
+    .rotate-back {
+        /* Safari */
+        -webkit-transform: rotate(0deg);
+        /* Firefox */
+        -moz-transform: rotate(0deg);
+        /* Internet Explorer 滤镜写法*/
+        filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0);
+        transition: all 0.3s;
+    }
+
+    .adminmenu-li {
+        position: relative;
+        cursor: pointer;
+    }
+
+    .menu-item {
+        padding: 8px 16px;
+    }
+
+    .item-icon {
+        width: 30px;
+        height: 30px;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+    .item-name {
+        font-size: 16px;
+        vertical-align: middle;
+        cursor: pointer;
+    }
+
+    .item-arrow {
+        position: absolute;
+        right: 16px;
+        top: 12px;
+        font-size: 22px;
+        cursor: pointer;
+    }
+
+    .menu-select {
+        background: #3fd5c0;
+        color: #ffffff;
+    }
+
+    .menu-select label.item-name, .menu-select i.item-arrow {
+        color: #ffffff;
+    }
+
+    .submenu-name {
+        display: inherit;
+        padding: 4px 60px;
+    }
+
+    .submenu-select, .submenu-name:hover, .submenu-name:focus {
+        background: #dfdfdf;
+        color: #848484;
+        transition: all .4s;
+        -moz-transition: all .4s; /* Firefox 4 */
+        -webkit-transition: all .4s; /* Safari 和 Chrome */
+        -o-transition: all .4s; /* Opera */
+    }
+
+    .mt6 {
+        margin-top: 6px;
+    }
+
+    .mb6 {
+        margin-bottom: 6px;
+    }
+
+    .admin-nav {
+        position: relative;
+        height: 40px;
+        background: #ffffff;
+    }
+    .nav-ol {
+        margin-left: 240px;
+        padding-top: 8px;
+        margin-bottom: 0;
+    }
+
+    .nav-ol > li {
+        display: inline-block;
+    }
+
+    .nav-ol > li + li:before {
+        padding: 0 5px;
+        color: #ccc;
+        content: "/\00a0";
+    }
+
+    .nav-ol .title1 {
+        vertical-align: middle;
+        color: #9d9d9d;
+        margin-left: 5px;
+        font-size: 15px;
+        margin-top: -8px;
+    }
+
+    .nav-ol .title2 {
+        vertical-align: middle;
+        color: #545454;
+        margin-top: -8px;
+        font-size: 15px;
+    }
+</style>
+
+<div class="w100 admin-nav">
+    <ol class="nav-ol">
+        <i class="fa fa-home fa-2x"></i>
+        <li class="title1">{{menuNav.title1}}</li>
+        <li class="title2"><strong>{{menuNav.title2}}</strong></li>
+    </ol>
+</div>
+<div class="admin-menu">
+    <ul id="accordion" class="adminmenu-ul">
+        <li ng-repeat="m1 in items" class="adminmenu-li border-top" ng-class="{'border-top-nor':$first}">
+            <div class="menu-item" ng-class="{'menu-select':m1.select}" ng-click="menuSelect($index)">
+                <img class="item-icon" src="img/ic-toux_.png"/>
+                <label class="item-name">{{m1.menu}}</label>
+                <i class="fa fa-angle-right item-arrow" ng-class="{'rotate90':m1.select,'rotate-back':!m1.select}"></i>
+            </div>
+            <ul class="submenu" ng-show="m1.select">
+                <li ng-repeat="m2 in m1.children" class="submenu-item" ng-class="{'mt6':$first,'mb6':$last}">
+                    <a class="submenu-name" ui-sref="{{m2.href}}" ng-bind="m2.menu" ng-click="selectSubmenu($parent.$index,$index)" ng-class="{'select-sunmenu':m2.select}"></a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>

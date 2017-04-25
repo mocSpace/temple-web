@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=9"/>
+    <title>浙江工业品市场后台登录</title>
+
+    <link href="../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../lib/bootstrap-sweetalert/sweetalert.css">
+    <link href="../lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!--<link rel="stylesheet" href="../css/reset.css">-->
+    <link rel="stylesheet" href="css/admin.css">
+
+</head>
+<body ng-app="login" id="ng-app" class="login ng-cloak" ng-controller="loginCtrl">
+<!-- LOGO -->
+<div class="logo">
+    <img src="" width="360" alt="logo"/>
+</div>
+<!-- LOGIN -->
+<div class="content">
+    <!-- LOGIN FORM -->
+    <form class="login-form">
+        <h3 class="form-title">登录8</h3>
+        <div class="alert alert-danger display-none fade in">
+            <button class="close" data-dismiss="alert">&times;</button>
+            <span> 请输入正确的用户名和密码 </span>
+        </div>
+        <div class="form-group">
+            <!--<label class="control-label">用户名</label>-->
+            <div class="input-icon">
+                <i class="fa fa-user"></i>
+                <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="用户名" ng-model="admin.username" name="username"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <!--<label class="control-label">密码</label>-->
+            <div class="input-icon">
+                <i class="fa fa-lock"></i>
+                <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="密码" ng-model="admin.password" name="password"/></div>
+        </div>
+        <div class="form-group yzm">
+            <div class="input-icon">
+                <i class="fa fa-image"></i>
+                <input class="form-control" type="text" ng-model="admin.iCode" placeholder="验证码" name="vilidateCode"/>
+            </div>
+            <div class="yzm-pic">
+                <img ng-src="{{imgCode}}" alt="" style="cursor: pointer" ng-click="getImgCode()">
+            </div>
+        </div>
+        <div class="form-actions clearfix" id="notIe">
+            <label class="" ng-class="(isIE?'margt9':'rememberme mt-checkbox mt-checkbox-outline')">
+                <input type="checkbox" name="remember" ng-model="admin.remeber"/> 记住账号
+                <span></span>
+            </label>
+            <button type="submit" class="btn green pull-right"> 登录</button>
+        </div>
+        <!--<div class="form-actions clearfix" id="ie">-->
+        <!--<label class="margt9">-->
+        <!--<input type="checkbox" name="remember"/>-->
+        <!--<span>记住账号</span>-->
+        <!--</label>-->
+        <!--<button type="submit" class="btn green pull-right"> 登录</button>-->
+        <!--</div>-->
+
+
+        <!--<div class="forget-password clearfix">-->
+        <!--<a href="#" id="forget-password" class="p-white pull-right">忘记密码？</a>-->
+        <!--</div>-->
+    </form>
+</div>
+<div class="copyright"> 2016 &copy; 浙江华业工业品市场有限公司. ALL Rights Reserved.</div>
+
+
+<script src="../lib/jquery/jquery.min.js" type="text/javascript"></script>
+<script src="../lib/angular/angular.min.js" type="text/javascript"></script>
+<script src="../lib/angular/angular-cookies.min.js"></script>
+<script src="../lib/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="../lib/bootstrap-sweetalert/sweetalert.min.js"></script>
+
+
+<script src="../lib/jquery-validation/jquery.validate.min.js" type="text/javascript"></script>
+<script src="../lib/jquery-validation/additional-methods.min.js" type="text/javascript"></script>
+<script src="../lib/jquery-validation/localization/messages_zh.js" type="text/javascript"></script>
+<script src="../lib/jquery-backstretch/jquery.backstretch.min.js" type="text/javascript"></script>
+
+<script src="js/constant.js"></script>
+<script src="js/validate.js"></script>
+
+
+<script>
+
+    if (!((navigator.userAgent.indexOf('MSIE') >= 0) && (navigator.userAgent.indexOf('Opera') < 0))) $.backstretch([
+        "img/1.jpg",
+        "img/2.jpg",
+        "img/3.jpg",
+        "img/4.jpg"
+    ], {
+        fade: 1000,
+        duration: 4000
+    });
+
+    var login = angular.module('login', ['ngCookies']);
+    login.constant("PATH", PATH);
+    login.config(['$httpProvider', function ($httpProvider) {
+        //启用跨域cookie
+        $httpProvider.defaults.withCredentials = true;
+    }]);
+    login.controller('loginCtrl', ['$scope', '$http', 'PATH', '$cookieStore', function ($scope, $http, PATH, $cookieStore) {
+        if ((navigator.userAgent.indexOf('MSIE') >= 0) && (navigator.userAgent.indexOf('Opera') < 0))   $scope.isIE = true;
+
+        $scope.admin = {};
+        $scope.admin.username = "";
+        $scope.admin.password = "";
+
+        // 获取验证码图片-登录
+        $scope.getImgCode = function () {
+            $http.get(PATH.getKaptchaImageB64).then(function (resp) {
+                var data = resp.data;
+                if (data.success) {
+                    $scope.imgCode = "";
+                    var res = data.data;
+                    $scope.imgCode = res.head + ',' + res.body;
+                }
+            }, function (resp) {
+
+            });
+        };
+//        function submitForm() {
+//            //----记住密码
+//            if ($scope.admin.remeber) {
+//                var expireDate = new Date();
+//                expireDate.setDate(expireDate.getDate() + 30);
+//                $cookieStore.put("admin",
+//                        {username: $scope.admin.username, password: $scope.admin.password, remeber: true},
+//                        {'expires': expireDate.toUTCString()}
+//                );
+//            } else {
+//                $cookieStore.remove("admin");
+//            }
+//
+//            $http.post(PATH.login, $scope.admin).success(function (data) {
+////                $('.com-loading').css('display','none');
+//                if (data.success) {
+//                    window.location.href = "index.html";
+//                } else {
+//                    swal("", data.eMsg, "error");
+//                    if (data.eCode == '301') {
+//                        $scope.getImgCode();
+//                    }
+//                }
+//            })
+//        }
+
+        if ($cookieStore.get("admin") != null) {
+            $scope.admin = $cookieStore.get("admin")
+        }
+
+        var formValiadte = new FormValiadte();
+
+        formValiadte.el = $(".login-form");
+        formValiadte.rules = {
+            username: {
+                required: true
+            },
+            password: {
+                required: true
+            },
+            vilidateCode: {
+                required: true
+            }
+        };
+        formValiadte.messages = {
+            username: {
+                required: "用户名不能为空"
+            },
+            password: {
+                required: "密码不能为空"
+            },
+            vilidateCode: {
+                required: "验证码不能为空"
+            }
+        };
+
+        formValiadte.invalidHandler = function () {
+            $('.alert-danger', $('.login-form')).show();
+        };
+
+
+        formValiadte.submitHandler = function () {
+//            console.log(JSON.stringify($scope.admin));
+
+//            $('.com-loading').css('display','block');
+//            ----记住密码
+            if ($scope.admin.remeber == true) {
+                $cookieStore.put("admin",
+                        {username: $scope.admin.username, password: $scope.admin.password, remeber: true},
+                        {expires: new Date(new Date().getTime() + 5000)}
+                );
+            } else {
+                $cookieStore.remove("admin");
+            }
+//
+            $http.post(PATH.login, $scope.admin).then(function (resp) {
+                var data = resp.data;
+                if (data.success) {
+                    window.location.href = "index.html";
+                } else {
+                    swal("", data.eMsg, "error");
+                    if (data.eCode == '301') {
+                        $scope.getImgCode();
+                    }
+                }
+            }, function (resp) {
+
+            });
+        };
+        initValiadte(formValiadte);
+
+        $scope.getImgCode();
+
+        document.onkeydown = function (event) {
+            var e = event || window.event || arguments.callee.caller.arguments[0];
+            if (e && e.keyCode == 13) { // enter 键
+                formValiadte.submitHandler();
+            }
+        };
+
+    }]);
+</script>
+</body>
+</html>

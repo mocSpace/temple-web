@@ -1,0 +1,24 @@
+[
+  {
+    "menu": "用户管理",
+    "children": [
+      {
+        "menu": "用户列表",
+        "href": "userList"
+      },
+      {
+        "menu": "添加编辑用户",
+        "href": "addOrEditUser"
+      }
+    ]
+  },
+  {
+    "menu": "系统设置",
+    "children": [
+     {
+        "menu": "测试页面",
+        "href": "test"
+      }
+    ]
+  }
+]
